@@ -1,0 +1,64 @@
+<style>
+h1, h2 {
+ font-size:1em;
+}
+
+#moverObject {
+ /* simple box */
+ position:absolute;
+ left:0px;
+ width:initial;
+ top:0px;
+}
+
+</style>
+<script type="text/javascript">
+
+var mw;
+var xVector;
+var yVector;
+
+function doMove() {
+  mover.style.top = parseInt(mover.style.top) + yVector*10 + 'px';
+  mover.style.left = parseInt(mover.style.left) + xVector*10 +'px';
+  var ww = window.innerWidth;
+  var wh = window.innerHeight;
+  if (parseInt(mover.style.left) >= ww - mw){
+  	xVector = -1;
+  }
+  else if (parseInt(mover.style.left) <= 0){
+  	xVector = 1;
+  };
+
+  if (parseInt(mover.style.top) >= wh - mh){
+  	yVector = -1;
+  }
+  else if (parseInt(mover.style.top) <= 0){
+  	yVector = 1;
+  };
+  setTimeout(doMove,1); 
+}
+
+function init() {
+  mover = document.getElementById('moverObject');
+  mover.style.left = '0px'; 
+  mover.style.top = '0px';
+  mover.style.width = '400px';
+  mover.style.height = '300px'
+  xVector = 1;
+  yVector = 1;
+  mw = parseInt(mover.style.width);
+  mh = parseInt(mover.style.height);
+  doMove(); 
+}
+
+window.onload = init;
+
+</script>
+</head>
+
+<body>
+<img id="moverObject" src="donger.gif">
+
+</body>
+</html>

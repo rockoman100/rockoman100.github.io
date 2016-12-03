@@ -1,0 +1,19 @@
+
+body{
+	background-image: url("../resource/img/atla_bg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	margin-top: 5%
+
+}
+
+img{
+	max-width: 100%;
+	min-width: 50%;
+	box-shadow: 1px 1px 12px black;
+}
+div{
+	padding-top: .5cm;
+	padding-bottom: .5cm;
+}
