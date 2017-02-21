@@ -1,0 +1,38 @@
+<script>
+var timer;
+
+function startCount(){
+	document.getElementById("count").style.paddingTop = "10px";
+	var pay = prompt("How many dollars do you make per hour?");
+	if (pay > 0){
+		var interval = secPerPenny(pay);
+		document.getElementById('butt').disabled = true;
+		document.getElementById('butt').innerHTML = "LABORING...";
+		setInterval(count, interval);
+		timer = 0
+	} 
+}
+
+function moveDown() {
+    var obj = document.getElementById("count");
+    var topVal = parseInt(obj.style.paddingTop, 10);
+    obj.style.paddingTop = (topVal + 1) + "px";    
+}
+
+function count(){
+	timer = timer + 1;
+	document.getElementById('count').innerHTML = "$" + timer/100 ;
+	moveDown();
+}
+function secPerPenny(dollarPerHour){
+	var pennyPerHour = dollarPerHour * 100;
+	var pennyPerMinute = pennyPerHour/60;
+	var pennyPerSecond = pennyPerMinute/60;
+	var secondsPerPenny = 1/pennyPerSecond;
+	return secondsPerPenny * 1000;
+}
+</script>
+
+<button type="button" id="butt" onclick="startCount()">BEGIN WAGE LABOR</button>
+
+<p id="count">$0.00</p>
