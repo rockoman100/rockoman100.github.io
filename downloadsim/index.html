@@ -15,7 +15,9 @@ function _(thingname){
 }
 var amountInMbits;
 var totalSeconds;
+var currentInterval;
 function doThing(){
+	clearInterval(currentInterval);
 	if(_("kbtn").checked){
 		console.log("KB");
 		amountInMbits = (_("sizebox").value / 1024) * 8;
@@ -30,7 +32,7 @@ function doThing(){
 	}
 	var speed = _("speedbox").value;
 	totalSeconds = amountInMbits / speed
-	setInterval(updateTimer, 1000);
+	currentInterval = setInterval(updateTimer, 1000);
 }
 function updateTimer(){
 	var secondsRemaining =  totalSeconds;
