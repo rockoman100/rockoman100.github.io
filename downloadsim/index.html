@@ -10,12 +10,15 @@ Download speed:	<input type="text"/ id="speedbox"> Mbps
 <input type="submit" value="Download" id="downbutt" onclick="doThing()"/>
 <p id="totaltime"></p>
 <script>
+
 function _(thingname){
 	return document.getElementById(thingname);
 }
+
 var amountInMbits;
 var totalSeconds;
 var currentInterval;
+
 function doThing(){
 	clearInterval(currentInterval);
 	if(_("kbtn").checked){
@@ -31,16 +34,18 @@ function doThing(){
 	totalSeconds = amountInMbits / speed
 	currentInterval = setInterval(updateTimer, 1000);
 }
+
 function updateTimer(){
 	var secondsRemaining =  totalSeconds;
 	var hoursRemaining = Math.floor(secondsRemaining / 60 / 60);
 	secondsRemaining = secondsRemaining - (hoursRemaining * 60 * 60);
 	var minutesRemaining = Math.floor(secondsRemaining / 60);
-	secondsRemaining = secondsRemaining - (minutesRemaining * 60);
+	secondsRemaining = Math.floor(secondsRemaining - (minutesRemaining * 60));
 	_("totaltime").innerHTML = hoursRemaining + "h " + minutesRemaining + "m " + secondsRemaining + "s";
 	totalSeconds = totalSeconds - 1;
 	if(totalSeconds < 0){
 		clearInterval(currentInterval);
 	}
 }
+
 </script>
