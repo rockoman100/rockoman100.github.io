@@ -19,15 +19,12 @@ var currentInterval;
 function doThing(){
 	clearInterval(currentInterval);
 	if(_("kbtn").checked){
-		console.log("KB");
 		amountInMbits = (_("sizebox").value / 1024) * 8;
 	}
 	else if(_("mbtn").checked){
-		console.log("MB");
 		amountInMbits = _("sizebox").value * 8;
 	}
 	else if(_("gbtn")){
-		console.log("GB");
 		amountInMbits = (_("sizebox").value * 1024) * 8;
 	}
 	var speed = _("speedbox").value;
@@ -42,5 +39,8 @@ function updateTimer(){
 	secondsRemaining = secondsRemaining - (minutesRemaining * 60);
 	_("totaltime").innerHTML = hoursRemaining + "h " + minutesRemaining + "m " + secondsRemaining + "s";
 	totalSeconds = totalSeconds - 1;
+	if(totalSeconds < 0){
+		clearInterval(currentInterval);
+	}
 }
 </script>
