@@ -13,8 +13,9 @@ Download speed:	<input type="text"/ id="speedbox"> Mbps
 function _(thingname){
 	return document.getElementById(thingname);
 }
+var amountInMbits;
+var totalSeconds;
 function doThing(){
-	var amountInMbits;
 	if(_("kbtn").checked){
 		console.log("KB");
 		amountInMbits = (_("sizebox").value / 1024) * 8;
@@ -27,16 +28,17 @@ function doThing(){
 		console.log("GB");
 		amountInMbits = (_("sizebox").value * 1024) * 8;
 	}
-	console.log(amountInMbits)
 	var speed = _("speedbox").value;
-	var secondsRemaining =  amountInMbits / speed;
+	totalSeconds = amountInMbits / speed
+	setInterval(updateTimer, 1000);
+}
+function updateTimer(){
+	var secondsRemaining =  totalSeconds;
 	var hoursRemaining = Math.floor(secondsRemaining / 60 / 60);
 	secondsRemaining = secondsRemaining - (hoursRemaining * 60 * 60);
 	var minutesRemaining = Math.floor(secondsRemaining / 60);
 	secondsRemaining = secondsRemaining - (minutesRemaining * 60);
-	console.log(hoursRemaining);
-	console.log(minutesRemaining);
-	console.log(secondsRemaining);
 	_("totaltime").innerHTML = hoursRemaining + "h " + minutesRemaining + "m " + secondsRemaining + "s";
+	totalSeconds = totalSeconds - 1;
 }
 </script>
