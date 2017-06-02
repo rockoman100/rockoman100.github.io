@@ -1,0 +1,42 @@
+Download size:	<input type="text" id="sizebox"/>
+<input type="radio" name="unit" value="kb" id="kbtn"> KB
+<input type="radio" name="unit" value="mb" id="mbtn"> MB
+<input type="radio" name="unit" value="gb" id="gbtn" checked> GB
+<br>
+<br>
+Download speed:	<input type="text"/ id="speedbox"> Mbps
+<br>
+<br>
+<input type="submit" value="Download" id="downbutt" onclick="doThing()"/>
+<p id="totaltime"></p>
+<script>
+function _(thingname){
+	return document.getElementById(thingname);
+}
+function doThing(){
+	var amountInMbits;
+	if(_("kbtn").checked){
+		console.log("KB");
+		amountInMbits = (_("sizebox").value / 1024) * 8;
+	}
+	else if(_("mbtn").checked){
+		console.log("MB");
+		amountInMbits = _("sizebox").value * 8;
+	}
+	else if(_("gbtn")){
+		console.log("GB");
+		amountInMbits = (_("sizebox").value * 1024) * 8;
+	}
+	console.log(amountInMbits)
+	var speed = _("speedbox").value;
+	var secondsRemaining =  amountInMbits / speed;
+	var hoursRemaining = Math.floor(secondsRemaining / 60 / 60);
+	secondsRemaining = secondsRemaining - (hoursRemaining * 60 * 60);
+	var minutesRemaining = Math.floor(secondsRemaining / 60);
+	secondsRemaining = secondsRemaining - (minutesRemaining * 60);
+	console.log(hoursRemaining);
+	console.log(minutesRemaining);
+	console.log(secondsRemaining);
+	_("totaltime").innerHTML = hoursRemaining + "h " + minutesRemaining + "m " + secondsRemaining + "s";
+}
+</script>
