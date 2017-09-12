@@ -8,7 +8,13 @@ Download speed:	<input type="text"/ id="speedbox"> Mbps
 <br>
 <br>
 <input type="submit" value="Download" id="downbutt" onclick="doThing()"/>
+<br>
+<br>
+<div id="myProgress" style="width: 50%; background-color: lightgrey;"">
+  <div id="myBar" style="width: 0%; height: 16px; background-color: green;"></div>
+</div>
 <p id="totaltime"></p>
+
 <script>
 
 function _(thingname){
@@ -16,10 +22,13 @@ function _(thingname){
 }
 
 var amountInMbits;
-var totalSeconds;
+var startingSeconds;
+var totalSecondsRemaining;
 var currentInterval;
+var bar = document.getElementById("myBar"); 
 
 function doThing(){
+	bar.style.width = '0%'
 	clearInterval(currentInterval);
 	if(_("kbtn").checked){
 		amountInMbits = (_("sizebox").value / 1024) * 8;
@@ -31,21 +40,33 @@ function doThing(){
 		amountInMbits = (_("sizebox").value * 1024) * 8;
 	}
 	var speed = _("speedbox").value;
-	totalSeconds = amountInMbits / speed
-	currentInterval = setInterval(updateTimer, 1000);
+	totalSecondsRemaining = amountInMbits / speed;
+	startingSeconds = amountInMbits / speed;
+	endingTime = Date.now() + (totalSecondsRemaining * 1000);
+	currentInterval = setInterval(updateTimer, 10);
+	
 }
 
 function updateTimer(){
-	var secondsRemaining =  totalSeconds;
+	var secondsRemaining =  totalSecondsRemaining;
 	var hoursRemaining = Math.floor(secondsRemaining / 60 / 60);
 	secondsRemaining = secondsRemaining - (hoursRemaining * 60 * 60);
 	var minutesRemaining = Math.floor(secondsRemaining / 60);
 	secondsRemaining = Math.floor(secondsRemaining - (minutesRemaining * 60));
-	_("totaltime").innerHTML = hoursRemaining + "h " + minutesRemaining + "m " + secondsRemaining + "s";
-	totalSeconds = totalSeconds - 1;
-	if(totalSeconds < 0){
+	var percentComplete = Math.ceil((1 - (totalSecondsRemaining/startingSeconds)) * 100)
+	_("totaltime").innerHTML = hoursRemaining + "h " + minutesRemaining + "m " + secondsRemaining + "s :: " + percentComplete + "%";
+	totalSecondsRemaining = (endingTime - Date.now()) / 1000;
+	if(totalSecondsRemaining < 0){
 		clearInterval(currentInterval);
 	}
+	moveBar()
+	
+}
+
+function moveBar() {
+    if(bar.style.width != '100%'){
+    	bar.style.width = (1 - (totalSecondsRemaining/startingSeconds)) * 100 + '%';
+    }     
 }
 
 </script>
